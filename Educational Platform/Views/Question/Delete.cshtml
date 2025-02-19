@@ -1,0 +1,44 @@
+﻿@model Question
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+
+<h3>Are you sure you want to delete this question ?</h3>
+<div>
+    <hr />
+    <dl class="row">
+       
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Text)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Text)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CorrectAnswer)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CorrectAnswer)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AnswerOptions)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AnswerOptions)
+        </dd>
+        <dt class = "col-sm-2">
+            Quiz Name
+        </dt>
+        <dd class = "col-sm-10">
+            @ViewBag.QuizName
+        </dd>
+    </dl>
+    
+    <form asp-action="ConfirmDelete" method="post" asp-route-QuizName="@ViewBag.QuizName" asp-route-CourseName="@ViewBag.CourseName">
+        <input type="submit" value="Delete" class="btn btn-danger" /> 
+        <input type="hidden" name="QuestionId" value="@Model.QuestionId" />
+        <a asp-action="ShowAll" asp-route-QuizName="@ViewBag.QuizName" class="btn btn-secondary" asp-route-CourseName="@ViewBag.CourseName">Cancel</a>
+    </form>
+</div>

@@ -1,0 +1,126 @@
+﻿@model ShowAllViewModel
+
+<div class="container mt-5">
+    <h2 class="mb-4">Manage Users and Roles</h2>
+
+    @if (TempData["Message"] != null)
+    {
+            <div class="alert alert-info">
+            @TempData["Message"]
+            </div>
+    }
+
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="roles-tab" data-bs-toggle="tab" href="#roles" role="tab">Roles</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="students-tab" data-bs-toggle="tab" href="#students" role="tab">Students</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="teachers-tab" data-bs-toggle="tab" href="#teachers" role="tab">Teachers</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="admins-tab" data-bs-toggle="tab" href="#admins" role="tab">Admins</a>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="myTabContent">
+        <!-- Roles Tab -->
+        <div class="tab-pane fade show active" id="roles" role="tabpanel">
+            <table class="table table-striped table-bordered table-hover mt-3">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Role Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var role in Model.Roles)
+                    {
+                            <tr>
+                                <td>@role.Name</td>
+                                <td>
+                                    <a asp-action="Delete" asp-route-RoleId="@role.Id" class="btn btn-danger btn-sm">Delete</a>
+                                </td>
+                            </tr>
+                    }
+                </tbody>
+            </table>
+            <a asp-action="Create" class="btn btn-success btn-lg">Create New Role</a>
+        </div>
+
+        <!-- Students Tab -->
+        <div class="tab-pane fade" id="students" role="tabpanel">
+            <table class="table table-striped table-bordered table-hover mt-3">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var student in Model.Students)
+                    {
+                            <tr>
+                                <td>@student.FullName</td>
+                                <td>@student.Email</td>
+                            </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Teachers Tab -->
+        <div class="tab-pane fade" id="teachers" role="tabpanel">
+            <table class="table table-striped table-bordered table-hover mt-3">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var teacher in Model.Teachers)
+                    {
+                            <tr>
+                                <td>@teacher.FullName</td>
+                                <td>@teacher.Email</td>
+                                <td>
+                                    <a asp-action="AssignAdminRole" asp-route-userId="@teacher.Id" class="btn btn-warning btn-sm">Assign Admin Role</a>
+                                </td>
+                            </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Admins Tab -->
+        <div class="tab-pane fade" id="admins" role="tabpanel">
+            <table class="table table-striped table-bordered table-hover mt-3">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Admin Name</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var admin in Model.Admins)
+                    {
+                            <tr>
+                                <td>@admin.FullName</td>
+                                <td>@admin.Email</td>
+                                @if(admin.Email!="ahmed@yahoo.com")
+                                {
+                                     <td><a asp-action="RevokeAdminRole" asp-route-Id="@admin.Id" class="btn btn-danger"> Remove From Admin</a></td>
+                                }
+                            </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Course>
+
+@{
+    ViewData["Title"] = "ShowAll";
+}
+
+<h1>All Courses</h1>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TeacherEmail)
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TeacherEmail)
+            </td>
+            <td>
+                @if(User.IsInRole("Admin") || User.IsInRole("Teacher"))
+                {        
+                    <a asp-action="Edit" class="btn btn-secondary" asp-route-id="@item.CourseId">Edit</a>
+                    <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.CourseId">Delete</a>
+                }
+                else
+                {
+                    <a asp-action="Enrollment" asp-controller="Enrollment" asp-route-CourseId="@item.CourseId" class="btn btn-primary">Enroll</a>
+                }
+                <a asp-action="ShowAll" asp-controller="Lesson" asp-route-CourseName="@item.Title" class="btn btn-success">View Lessons</a>
+                <a asp-action="ShowAll" asp-controller="Quiz" asp-route-CourseName="@item.Title" class="btn btn-success">View Quizzes</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<a asp-action="Add" class="btn btn-primary">Add New Course</a>

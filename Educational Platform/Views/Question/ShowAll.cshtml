@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Question>
+
+@{
+    ViewData["Title"] = "ShowAll";
+}
+
+<h1>All question of @ViewBag.QuizName</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Text)
+            </th>
+            <th>Choices</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Text)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CorrectAnswer)
+                @Html.DisplayFor(modelItem => item.AnswerOptions)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-QuestionId="@item.QuestionId" asp-route-CourseName="@ViewBag.CourseName" asp-route-QuizName="@ViewBag.QuizName" class="btn btn-secondary">Edit</a>
+                <a asp-action="Delete" asp-route-QuestionId="@item.QuestionId" asp-route-CourseName="@ViewBag.CourseName" asp-route-QuizName="@ViewBag.QuizName" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<a asp-action="Add" asp-route-QuizName="@ViewBag.QuizName" asp-route-CourseName="@ViewBag.CourseName" class="btn btn-primary">Add Question</a>
+<a asp-action="ShowAll" asp-controller="Quiz" asp-route-CourseName="@ViewBag.CourseName" class="btn btn-secondary"> Back to quizzes list</a>

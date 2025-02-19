@@ -1,0 +1,49 @@
+﻿@model AddQuestionViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit question of @Model.QuizName</h1>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SaveEdit" asp-route-QuestionId="@ViewBag.QuestionId" asp-route-CourseName="@ViewBag.CourseName" method="post">
+            <div class="form-group">
+
+                <label asp-for="Text" class="control-label"></label>
+                <input asp-for="Text" class="form-control" />
+                <span asp-validation-for="Text" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CorrectAnswer" class="control-label"></label>
+                <input asp-for="CorrectAnswer" class="form-control" />
+                <span asp-validation-for="CorrectAnswer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AnswerOptions" class="control-label"></label>
+                <input asp-for="AnswerOptions" class="form-control" />
+                <span asp-validation-for="AnswerOptions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="QuizName" class="control-label"></label>
+                <input asp-for="QuizName" class="form-control" />
+                <span asp-validation-for="QuizName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="ShowAll" class="btn btn-secondary" asp-route-CourseName="@ViewBag.CourseName" asp-route-QuizName="@Model.QuizName">Cancel</a>
+</div>
+
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

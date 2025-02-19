@@ -1,0 +1,23 @@
+﻿@model CreateRoleViewModel
+
+<div class="container mt-5">
+    <h2 class="mb-4">Create New Role</h2>
+
+    <form asp-action="SaveCreate" method="post" class="shadow p-4 rounded bg-light">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Name" class="form-label font-weight-bold"></label>
+            <input asp-for="Name" class="form-control" placeholder="Enter role name" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center">
+            <input type="submit" class="btn btn-success btn-lg" value="Create Role" />
+            <a asp-action="ShowAll" class="btn btn-secondary btn-lg">Back to List</a>
+        </div>
+    </form>
+</div>
+@section Scripts {
+            <partial name="_ValidationScriptsPartial" />
+}

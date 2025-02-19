@@ -1,0 +1,59 @@
+﻿@model IList<Lesson>
+
+@{
+    ViewData["Title"] = "ShowAll";
+}
+
+<h2>@ViewBag.CourseName Course</h2>
+
+<h3>All Lessons</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Content
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>    
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+            <td>
+                @if(User.IsInRole("Student"))
+                {    
+                    @if(ViewBag.CompletedLessons.Contains(item.LessonId))
+                    {
+                        <button disabled="disabled" class="btn btn-success">Completed ✓</button>
+                    }
+                    else
+                    {    
+                        <a asp-action="MarkAsCompleted" asp-controller="Progress" asp-route-CourseName="@ViewBag.CourseName" asp-route-LessonId="@item.LessonId" class="btn btn-success">Mark as completed</a>
+                    }
+                }
+                else
+                {            
+                    <a asp-action="Edit" asp-route-id="@item.LessonId" class="btn btn-secondary">Edit</a>
+                    <a asp-action="Delete" asp-route-LessonId="@item.LessonId" asp-route-CourseName="@ViewBag.CourseName" class="btn btn-danger">Delete</a>
+                }
+                
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<a asp-action="Add" class="btn btn-primary" asp-route-CourseName="@ViewBag.CourseName"> Add New Lesson</a>
+<a asp-action="ShowAll" asp-controller="Course" class="btn btn-secondary"> Cancel</a>
